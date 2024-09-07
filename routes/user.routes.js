@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import { login, logout, register } from '../controllers/user.controller.js';
+import { login, logout, register, deleteUser } from '../controllers/user.controller.js';
 
 const router = Router();
 
@@ -18,7 +18,5 @@ router.post('/logout', logout)
 // router.put('/:id', (req, res) => {
 //     res.send('Hello User PUT!');
 //     });
-// router.delete('/:id', (req, res) => {
-//     res.send('Hello User DELETE!');
-//     });
+router.delete('/:id',deleteUser )
 export default router;
