@@ -4,8 +4,8 @@ import event from '../models/event.model.js';
 //CREAR EVENTO
 export const createEvent = async (req, res) => {
     try {
-        const { title, description, date, location, image } = req.body;
-        const newEvent = new event({ title, description, date, location, image });
+        const { title, description, date, location, image, tickets } = req.body;
+        const newEvent = new event({ title, description, date, location, image, tickets });
         const eventSaved = await newEvent.save();
         res.status(201).json(eventSaved);
     } catch (error) {
@@ -41,8 +41,8 @@ export const getEventById = async (req, res) => {
 export const updateEvent = async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, description, date, location, image } = req.body;
-        const eventUpdated = await event.findByIdAndUpdate(id, { title, description, date, location, image }, { new: true });
+        const { title, description, date, location, image, tickets } = req.body;
+        const eventUpdated = await event.findByIdAndUpdate(id, { title, description, date, location, image, tickets }, { new: true });
         if (!eventUpdated) {
             return res.status(404).json({ message: 'Evento no encontrado' });
         }
