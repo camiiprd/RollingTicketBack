@@ -3,10 +3,17 @@ import userRoutes from './routes/user.routes.js';
 import eventRoutes from './routes/event.routes.js';
 import categoryRoutes from './routes/category.routes.js';
 import  { createRole} from './utils/roles.js';
+import cors from 'cors'
+
+
 
 const app = express();
 app.use(express.json());
 createRole()
+
+// Habilita CORS
+app.use(cors());
+
 app.use('/api/usuarios', userRoutes);
 app.use('/api/eventos', eventRoutes);
 app.use('/api/categorias', categoryRoutes);
