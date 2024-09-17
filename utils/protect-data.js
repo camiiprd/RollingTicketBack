@@ -15,8 +15,8 @@ export const comparePassword = async (password, hashPassword) => {
     return await bcrypt.compare(password, hashPassword)
 }
 
-// Crear token
-export const createAccessToken = (user) => {
-    const expiresIn = '1h'; // Valor predeterminado de 1 hora
-    return jwt.sign({ userId: user._id, roles: user.roles }, JWT_SECRET, { expiresIn });
-};
+// // Crear token
+// export const createAccessToken = (user) => {
+//     const expiresIn = '1h'; // Valor predeterminado de 1 hora
+//     return jwt.sign({ userId: user._id, roles: user.roles }, JWT_SECRET, { expiresIn });
+// };
