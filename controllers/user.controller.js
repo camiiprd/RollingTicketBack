@@ -1,5 +1,7 @@
-import User from '../models/user.model.js'; // Asegúrate de que el modelo esté correctamente importado
-import { comparePassword, createAccessToken, encryptedPassword } from '../utils/protect-data.js';
+import User from '../models/user.model.js'; 
+import bcrypt from 'bcryptjs'
+import cookieParser from 'cookie-parser';
+import {  createAccessToken, encryptedPassword } from '../utils/protect-data.js';
 
 export const register = async (req, res) => {
     try {
@@ -51,14 +53,24 @@ export const login = async (req, res) => {
         }
 
         // Verificar contraseña
-        const isPasswordCorrect = await comparePassword(password, userFound.password);
+
+        const isPasswordCorrect = await bcrypt.compare(password, userFound.password);
         if (!isPasswordCorrect) {
             return res.status(400).json({ message: 'contraseña incorrecta' });
         }
 
-        // crear token
-        const accessToken = createAccessToken(userFound._id);
-        res.status(200).json({ message: 'login exitoso', accessToken, user: userFound });
+        const token = createAccessToken(userFound._id)
+        
+        console.log(token)
+        //almacenar token
+        res.cookie('token', token, {
+            httpOnly: true, 
+            secure: true, 
+            sameSites: 'None',
+            maxAge: 24 * 60 * 60 * 1000
+        })
+
+        res.status(200).json({message: 'login exitoso', token, user: userFound})
     } catch (error) {
         console.error('Error al iniciar sesión:', error);
         res.status(500).json({ message: 'Error al iniciar sesión', error: error.message });
@@ -99,3 +111,4 @@ export const getUsers = async (req, res) => {
 };
 
 
+//ACTUALIZAR USUARIOS
