@@ -8,7 +8,13 @@ dotenv.config();
 
 export const register = async (req, res) => {
     try {
-        const { userName, password, email, phone, address, roles } = req.body;
+        const { userName, password, email, phone, address, roles, profilePicture } = req.body;
+
+        // Validaciones de la contraseña (longitud mínima, mayúsculas, símbolos)
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            return res.status(400).json({ message: 'La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un símbolo.' });
+        }
 
         // Encriptar la contraseña
         const encryptedPwd = await encryptedPassword(password);
@@ -16,7 +22,7 @@ export const register = async (req, res) => {
         // Crear un nuevo usuario usando el modelo User
         const newUser = new User({
             userName,
-            password: encryptedPwd, // Usa el campo 'password' del modelo
+            password: encryptedPwd,
             email,
             phone,
             address: {
@@ -26,14 +32,15 @@ export const register = async (req, res) => {
                 state: address.state,
                 zipCode: address.zipCode
             },
-            roles: roles || 'user' // Asegúrate de que roles esté definido o tenga un valor predeterminado
+            roles: roles || 'user',
+            profilePicture: profilePicture || ''  // Almacenar la URL de la imagen
         });
 
         // Guardar el usuario en la base de datos
         const userSaved = await newUser.save();
         res.status(201).json(userSaved);
     } catch (error) {
-        console.error('Error en la creación del usuario:', error); // Añadir log detallado para depuración
+        console.error('Error en la creación del usuario:', error);
         res.status(500).json({ message: 'Error creando usuario', error: error.message });
     }
 };
