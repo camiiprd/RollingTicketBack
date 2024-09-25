@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        minlength: 8 // Validación mínima para la longitud
     },
     email: {
         type: String,
@@ -43,7 +44,11 @@ const userSchema = new mongoose.Schema({
     roles: {
         type: String,
         default: 'user'
-    } 
+    } ,
+    profilePicture: {
+        type: String, // Esto almacenará la URL de la foto
+        default: ''  // Por si el usuario no sube una imagen
+    }
 })
 
 export default mongoose.model('User', userSchema);
