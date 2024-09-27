@@ -2,15 +2,14 @@ import express from 'express';
 import userRoutes from './routes/user.routes.js';
 import eventRoutes from './routes/event.routes.js';
 import categoryRoutes from './routes/category.routes.js';
-import  { createRole} from './utils/roles.js';
-import cors from 'cors'
+import { createRole } from './utils/roles.js';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
-
 
 const app = express();
 app.use(express.json());
-createRole()
-app.use(cookieParser())
+createRole();
+app.use(cookieParser());
 
 // Habilita CORS
 app.use(cors());
