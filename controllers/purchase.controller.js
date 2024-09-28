@@ -1,4 +1,4 @@
-import Purchase from '../models/Purchase.js';
+import Purchase from '../models/purchase.model.js';
 
 export const getPurchaseHistory = async (req, res) => {
     try {
