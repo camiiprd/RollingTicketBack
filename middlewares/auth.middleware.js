@@ -2,13 +2,20 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config/config.js';
 
 const verifyToken = (req, res, next) => {
-    const token = req.headers['authorization'];
+    const authorizationHeader = req.headers['authorization'] || req.headers['Authorization'];
+    if (!authorizationHeader) {
+        return res.status(403).send({ message: 'No token provided!' });
+    }
+
+    const token = authorizationHeader.split(' ')[1]; 
+    
     if (!token) {
         return res.status(403).send({ message: 'No token provided!' });
     }
 
     jwt.verify(token, JWT_SECRET, (err, decoded) => {
         if (err) {
+            console.error('JWT verification error:', err); 
             return res.status(401).send({ message: 'Unauthorized!' });
         }
         req.userId = decoded.userId;
