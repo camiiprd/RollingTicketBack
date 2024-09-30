@@ -1,11 +1,20 @@
 import Purchase from '../models/purchase.model.js';
 
-export const getPurchaseHistory = async (req, res) => {
+export const createPurchase = async (req, res) => {
+    const { items, total, userId } = req.body;
+    
     try {
-        const purchases = await Purchase.find({ userId: req.params.userId }).populate('items.productId');
-        res.status(200).json(purchases);
+        const newPurchase = new Purchase({
+            userId,
+            items,
+            total
+        });
+
+        await newPurchase.save();
+        res.status(201).json({ message: 'Compra realizada con éxito' });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error retrieving purchase history' });
+        res.status(500).json({ message: 'Error al realizar la compra' });
     }
 };
+
