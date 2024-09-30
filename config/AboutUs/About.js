@@ -8,7 +8,7 @@ const app = express();
 app.use(cors());
 
 // Conectar a MongoDB Atlas
-mongoose.connect('mongodb+srv://<usuario>:<password>@cluster0.mongodb.net/miDB', {
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.mongodb.net/miDB`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
