@@ -1,8 +1,9 @@
 import express from 'express';
-import { getPurchaseHistory } from '../controllers/purchase.controller.js';
+import {  createPurchase  } from '../controllers/purchase.controller.js';
 
 const router = express.Router();
 
-router.get('/history/:userId', getPurchaseHistory);
+// Ruta para crear una nueva compra
+router.post('/purchases', createPurchase); 
 
 export default router;
