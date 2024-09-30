@@ -7,3 +7,5 @@ const router = express.Router();
 router.post('/contact', createContact);
 
 export default router;
+
+// contact.controller.js
