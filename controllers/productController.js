@@ -1,9 +1,9 @@
-const Product = require('../models/product.model.js'); // Ajustado para CommonJS
+import Event from '../models/event.model.js'
 
 // Obtener todos los productos
-exports.getProducts = async (req, res) => {
+export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find({});
+    const products = await Event.find({});
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener los productos', error: error });
@@ -11,7 +11,7 @@ exports.getProducts = async (req, res) => {
 };
 
 // Agregar un nuevo producto
-exports.addProduct = async (req, res) => {
+export const addProduct = async (req, res) => {
   const { name, price, stock, description, category } = req.body;
   const newProduct = new Product({ name, price, stock, description, category });
   
@@ -24,7 +24,7 @@ exports.addProduct = async (req, res) => {
 };
 
 // Actualizar un producto existente
-exports.updateProduct = async (req, res) => {
+export const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { name, price, stock, description, category } = req.body;
 
@@ -37,7 +37,7 @@ exports.updateProduct = async (req, res) => {
 };
 
 // Eliminar un producto
-exports.deleteProduct = async (req, res) => {
+export const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
