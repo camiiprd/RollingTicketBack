@@ -12,8 +12,6 @@ const productSchema = new mongoose.Schema({
   timestamps: true, // Agrega campos de createdAt y updatedAt
 });
 
-// Crea el modelo a partir del esquema
-const Product = mongoose.model('Product', productSchema);
 
 // Exporta el modelo
-export default Product; // Esto debe ser "export default Product"
+export default mongoose.model('Product', productSchema);
