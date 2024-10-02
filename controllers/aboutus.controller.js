@@ -33,11 +33,12 @@ export const updateAboutUs = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, text, img, githubLink, } = req.body;
-    const aboutusUpdated = await AboutUs.findAndAboutUs(
-      
-      {  title, text, img, githubLink,},
+    const aboutusUpdated = await AboutUs.findByIdAndUpdate(
+      id,
+      { title, text, img, githubLink },
       { new: true }
-    );
+  );
+  
     if (!aboutusUpdated) {
       return res.status(404).json({ message: "Evento no encontrado" });
     }
@@ -54,7 +55,8 @@ export const updateAboutUs = async (req, res) => {
 export const deleteAboutUs = async (req, res) => {
   try {
     const { id } = req.params;
-    const aboutusDeleted = await Event.findByIdAndDelete(id);
+    const aboutusDeleted = await AboutUs.findByIdAndDelete(id);
+
     if (!aboutusDeleted) {
       return res.status(404).json({ message: "about us no encontrado" });
     }
