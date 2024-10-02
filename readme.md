@@ -179,9 +179,6 @@ Comprar un Boleto de Concierto
 Navegar a la lista de eventos.
 Seleccionar un evento y hacer clic en "COMPRAR".
 Revisar el carrito y proceder al pago.
-Manejo del Stock de Eventos
-El backend gestiona el stock disponible en cada compra.
-Al confirmar una compra, el stock del evento se reduce automáticamente.
 
 
 ### Cómo Contribuir
