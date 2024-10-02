@@ -4,6 +4,7 @@ import eventRoutes from './routes/event.routes.js';
 import categoryRoutes from './routes/category.routes.js';
 import purchaseRoutes from './routes/purchase.routes.js';
 import contactRoutes from './routes/contact.routes.js';
+import aboutusRoutes from './routes/aboutus.routes.js';
 
 import { createRole } from './utils/roles.js';
 import cors from 'cors';
@@ -26,5 +27,6 @@ app.use('/api/categorias', categoryRoutes);
 app.use('/api/purchases', purchaseRoutes);
 app.use('/api', contactRoutes);
 app.use('/api/stock', stockRoutes);
+app.use('/api/AboutUs',aboutusRoutes);
 
 export default app;
