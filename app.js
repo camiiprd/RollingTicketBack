@@ -14,7 +14,6 @@ const app = express();
 app.use(express.json());
 createRole();
 app.use(cookieParser());
-app.use(express.json());
 
 
 // Habilita CORS
@@ -25,7 +24,6 @@ app.use('/api/eventos', eventRoutes);
 app.use('/api/categorias', categoryRoutes);
 app.use('/api/purchases', purchaseRoutes);
 app.use('/api', contactRoutes);
-app.use('/api/stock', stockRoutes);
 app.use('/api/AboutUs',aboutusRoutes);
 
 export default app;
