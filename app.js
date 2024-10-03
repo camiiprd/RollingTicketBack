@@ -9,7 +9,6 @@ import aboutusRoutes from './routes/aboutus.routes.js';
 import { createRole } from './utils/roles.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import stockRoutes from './routes/productRoutes.js';
 
 const app = express();
 app.use(express.json());
