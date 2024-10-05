@@ -23,6 +23,9 @@ const eventSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    stock: {
+        type: Number,
+    },
     });
 
 export default mongoose.model("Event", eventSchema);
