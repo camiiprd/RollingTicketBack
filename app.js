@@ -18,14 +18,22 @@ app.use(cookieParser());
 
 
 // Habilita CORS
-app.use(cors());
+app.use(cors(
+    {
+        origin: 'http://localhost:5173',
+        // methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        // allowedHeaders: ['Content-Type', 'Authorization']
+        credentials: true
+    }
+
+));
 
 app.use('/api/usuarios', userRoutes);
 app.use('/api/eventos', eventRoutes);
 app.use('/api/categorias', categoryRoutes);
 app.use('/api/purchases', purchaseRoutes);
 app.use('/api', contactRoutes);
-app.use('/api/AboutUs',aboutusRoutes);
+app.use('/api/AboutUs', aboutusRoutes);
 app.use('/api/editProfile', editProfileRoutes)
 
 export default app;
