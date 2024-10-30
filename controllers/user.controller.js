@@ -10,7 +10,7 @@ dotenv.config();
 const createAccessToken = (userId, userRoles) => {
     return jwt.sign(
         { id: userId, roles: userRoles }, // Payload del token
-        process.env.JWT_SECRET, 
+        process.env.JWT_SECRET,
         { expiresIn: '1h' } // Expiración del token
     );
 };
@@ -42,7 +42,7 @@ export const register = async (req, res) => {
                 zipCode: address.zipCode
             },
             roles: roles || 'user',
-            profilePicture: profilePicture || '' 
+            profilePicture: profilePicture || ''
         });
 
         const userSaved = await newUser.save();
@@ -56,7 +56,9 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-
+        console.log(
+            { email, password }
+        )
         if (!email || !password) {
             return res.status(400).json({ message: 'Email y contraseña son requeridos' });
         }
@@ -72,21 +74,25 @@ export const login = async (req, res) => {
         }
 
         const token = createAccessToken(userFound._id, userFound.roles);
+        // res.cookie('token', token, {
+        //     httpOnly: true,
+        //     secure: true,
+        //     sameSite: 'none',
+        //     maxAge: 24 * 60 * 60 * 1000 // 1 día
+        // });
         res.cookie('token', token, {
             httpOnly: true,
-            secure: true,
-            sameSite: 'None',
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
             maxAge: 24 * 60 * 60 * 1000 // 1 día
         });
 
-        res.status(200).json({
+        console.log({ token })
+
+        res.status(200).json({ 
             message: 'Login exitoso',
             token,
-            user: {
-                id: userFound._id,
-                email: userFound.email,
-                roles: userFound.roles
-            }
+            user: userFound
         });
     } catch (error) {
         res.status(500).json({ message: 'Error al iniciar sesión', error: error.message });
@@ -145,7 +151,7 @@ export const updateUser = async (req, res) => {
                 roles,
                 profilePicture: profilePicture || ''
             },
-            { new: true } 
+            { new: true }
         );
 
         if (!updatedUser) {
