@@ -6,15 +6,17 @@ import purchaseRoutes from './routes/purchase.routes.js';
 import contactRoutes from './routes/contact.routes.js';
 import aboutusRoutes from './routes/aboutus.routes.js';
 import editProfileRoutes from './routes/editProfile.routes.js';
-
 import { createRole } from './utils/roles.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+
 
 const app = express();
 app.use(express.json());
 createRole();
 app.use(cookieParser());
+app.use(morgan('dev'))
 
 
 // Habilita CORS
