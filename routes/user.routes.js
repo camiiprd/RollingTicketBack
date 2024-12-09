@@ -1,17 +1,18 @@
 import { Router } from 'express';
-import { register, login, logout, deleteUser, getUsers, updateUser } from '../controllers/user.controller.js';
-import { restrictTo, verifyToken } from '../middlewares/auth.middleware.js';
+import { login, logout, profile, register } from '../controllers/user.controller.js'
+import { authRequired } from '../middlewares/validateToken.js'
+import { validatingSchema } from '../middlewares/validator.middleware.js';
+import { loginSchema, registerSchema } from '../schemas/validate.schema.js';
 
 const router = Router();
 
 // Rutas públicas
-router.post('/register', register);
-router.post('/login', login);
+router.post('/register', validatingSchema(registerSchema), register);
+router.post('/login', validatingSchema(loginSchema), login);
 router.post('/logout', logout);
+router.get('/profile', authRequired, profile)
 
 // Rutas protegidas por token
-router.get('/users',verifyToken, restrictTo(['admin']), getUsers);
-router.delete('/user/:id', verifyToken, deleteUser);
-router.put('/user/:id', verifyToken, updateUser);
+
 
 export default router;
